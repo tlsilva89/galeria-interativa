@@ -1,0 +1,503 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Variáveis CSS personalizadas com cores muito escuras */
+:root {
+  --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-secondary: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-success: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  --gradient-warm: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+  --gradient-cool: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  --gradient-dark: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+
+  /* Cores de texto muito escuras - próximas do preto */
+  --text-primary: #0a0a0a; /* Praticamente preto */
+  --text-secondary: #171717; /* Quase preto */
+  --text-muted: #262626; /* Muito escuro */
+  --text-light: #404040; /* Escuro */
+  --text-contrast: #000000; /* Preto absoluto */
+}
+
+/* Reset e configurações base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  min-height: 100vh;
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #94a3b8, #64748b);
+}
+
+/* Configurações de base do Tailwind com contraste máximo */
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Poppins", system-ui, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--text-contrast);
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl lg:text-6xl;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl lg:text-5xl;
+  }
+
+  h3 {
+    @apply text-2xl md:text-3xl lg:text-4xl;
+  }
+
+  h4 {
+    @apply text-xl md:text-2xl lg:text-3xl;
+  }
+
+  h5 {
+    @apply text-lg md:text-xl lg:text-2xl;
+  }
+
+  h6 {
+    @apply text-base md:text-lg lg:text-xl;
+  }
+
+  p {
+    @apply text-base leading-relaxed;
+    color: var(--text-primary);
+  }
+
+  a {
+    @apply transition-colors duration-200;
+    color: var(--text-contrast);
+  }
+
+  button {
+    @apply transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+  }
+
+  input,
+  textarea,
+  select {
+    @apply transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500;
+    color: var(--text-contrast);
+  }
+}
+
+/* Componentes personalizados com contraste máximo */
+@layer components {
+  /* Container principal da aplicação */
+  .app-container {
+    @apply min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100;
+  }
+
+  /* Header da aplicação */
+  .app-header {
+    @apply bg-white/80 backdrop-blur-md border-b border-white/20 shadow-soft sticky top-0 z-50;
+  }
+
+  /* Grid da galeria */
+  .gallery-grid {
+    @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-6;
+  }
+
+  /* Card da galeria - CORRIGIDO: removido 'group' do @apply */
+  .gallery-item {
+    @apply bg-white rounded-2xl shadow-soft hover:shadow-large transition-all duration-300 overflow-hidden cursor-pointer;
+    @apply hover:-translate-y-2 hover:scale-[1.02];
+  }
+
+  /* Imagem da galeria */
+  .gallery-image {
+    @apply w-full h-48 object-cover transition-transform duration-500;
+  }
+
+  /* Hover effect para a imagem - usando CSS vanilla para group */
+  .gallery-item:hover .gallery-image {
+    transform: scale(1.1);
+  }
+
+  /* Conteúdo do card */
+  .gallery-content {
+    @apply p-4 space-y-3;
+  }
+
+  /* Título da galeria com contraste máximo */
+  .gallery-title {
+    @apply text-lg font-semibold line-clamp-2 transition-colors;
+    color: var(--text-contrast);
+  }
+
+  .gallery-item:hover .gallery-title {
+    @apply text-primary-600;
+  }
+
+  /* Botões de ação */
+  .gallery-actions {
+    @apply flex items-center justify-between gap-2;
+  }
+
+  /* Status badge com contraste máximo */
+  .status-badge {
+    @apply inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium;
+  }
+
+  .status-active {
+    @apply bg-success-100 border border-success-200;
+    color: #14532d;
+  }
+
+  .status-inactive {
+    @apply bg-danger-100 border border-danger-200;
+    color: #7f1d1d;
+  }
+
+  /* Botões de ação */
+  .action-btn {
+    @apply p-2 rounded-lg transition-all duration-200 hover:scale-110 focus:scale-95;
+  }
+
+  .edit-btn {
+    @apply action-btn bg-primary-100 text-primary-800 hover:bg-primary-200;
+  }
+
+  .delete-btn {
+    @apply action-btn bg-danger-100 text-danger-800 hover:bg-danger-200;
+  }
+
+  .toggle-btn {
+    @apply action-btn bg-secondary-100 hover:bg-secondary-200;
+    color: var(--text-contrast);
+  }
+
+  /* Formulários com contraste máximo */
+  .form-container {
+    @apply bg-white rounded-2xl shadow-medium p-6 space-y-6;
+  }
+
+  .form-group {
+    @apply space-y-2;
+  }
+
+  .form-label {
+    @apply block text-sm font-semibold;
+    color: var(--text-contrast);
+  }
+
+  .form-input {
+    @apply w-full px-4 py-3 border border-gray-200 rounded-xl focus:border-primary-500 focus:ring-primary-500 transition-all;
+    color: var(--text-contrast);
+  }
+
+  .form-error {
+    @apply text-sm mt-1;
+    color: #7f1d1d;
+  }
+
+  /* Paginação com contraste máximo */
+  .pagination {
+    @apply flex items-center justify-center gap-2 mt-8;
+  }
+
+  .pagination-btn {
+    @apply px-4 py-2 rounded-lg border transition-all duration-200;
+  }
+
+  .pagination-active {
+    @apply bg-primary-600 text-white border-primary-600;
+  }
+
+  .pagination-inactive {
+    @apply bg-white border-gray-200 hover:bg-gray-50;
+    color: var(--text-contrast);
+  }
+
+  /* Filtros com contraste máximo */
+  .filter-container {
+    @apply flex flex-wrap items-center gap-3 mb-6;
+  }
+
+  .filter-btn {
+    @apply px-4 py-2 rounded-full border transition-all duration-200 text-sm font-medium;
+  }
+
+  .filter-active {
+    @apply bg-primary-600 text-white border-primary-600;
+  }
+
+  .filter-inactive {
+    @apply bg-white border-gray-200 hover:bg-gray-50;
+    color: var(--text-contrast);
+  }
+
+  /* Loading states */
+  .loading-spinner {
+    @apply animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600;
+  }
+
+  .loading-skeleton {
+    @apply animate-pulse bg-gray-200 rounded;
+  }
+
+  /* Modais e overlays */
+  .modal-overlay {
+    @apply fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4;
+  }
+
+  .modal-content {
+    @apply bg-white rounded-2xl shadow-large max-w-md w-full p-6 animate-scale-in;
+  }
+
+  /* Toasts e notificações */
+  .toast {
+    @apply fixed top-4 right-4 z-50 p-4 rounded-xl shadow-large animate-slide-down;
+  }
+
+  .toast-success {
+    @apply toast bg-success-600 text-white;
+  }
+
+  .toast-error {
+    @apply toast bg-danger-600 text-white;
+  }
+
+  .toast-warning {
+    @apply toast bg-warning-600 text-white;
+  }
+
+  .toast-info {
+    @apply toast bg-primary-600 text-white;
+  }
+}
+
+/* Utilitários personalizados */
+@layer utilities {
+  /* Gradientes */
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-secondary {
+    background: var(--gradient-secondary);
+  }
+
+  .gradient-success {
+    background: var(--gradient-success);
+  }
+
+  .gradient-warm {
+    background: var(--gradient-warm);
+  }
+
+  .gradient-cool {
+    background: var(--gradient-cool);
+  }
+
+  .gradient-dark {
+    background: var(--gradient-dark);
+  }
+
+  /* Text gradients com contraste máximo */
+  .text-gradient-primary {
+    background: linear-gradient(135deg, #0369a1 0%, #1e40af 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .text-gradient-secondary {
+    background: linear-gradient(135deg, #7c2d12 0%, #a21caf 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Classes de texto com contraste máximo */
+  .text-ultra-dark {
+    color: var(--text-contrast);
+  }
+
+  .text-very-dark {
+    color: var(--text-primary);
+  }
+
+  .text-dark {
+    color: var(--text-secondary);
+  }
+
+  .text-medium-dark {
+    color: var(--text-muted);
+  }
+
+  /* Line clamp utilities */
+  .line-clamp-1 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .line-clamp-2 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+  .line-clamp-3 {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;
+  }
+
+  /* Aspect ratios */
+  .aspect-square {
+    aspect-ratio: 1 / 1;
+  }
+
+  .aspect-video {
+    aspect-ratio: 16 / 9;
+  }
+
+  .aspect-photo {
+    aspect-ratio: 4 / 3;
+  }
+
+  /* Glass morphism */
+  .glass {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .glass-dark {
+    background: rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Animações personalizadas */
+  .animate-float {
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  .animate-glow {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  @keyframes glow {
+    from {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.2);
+    }
+    to {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+    }
+  }
+}
+
+/* Responsividade aprimorada */
+@media (max-width: 640px) {
+  .gallery-grid {
+    @apply grid-cols-1 gap-4 p-4;
+  }
+
+  .gallery-item {
+    @apply hover:scale-100 hover:-translate-y-1;
+  }
+}
+
+@media (max-width: 768px) {
+  .filter-container {
+    @apply flex-col items-stretch;
+  }
+
+  .filter-btn {
+    @apply text-center;
+  }
+}
+
+/* Dark mode support com cores muito escuras */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text-primary: #f8fafc;
+    --text-secondary: #e2e8f0;
+    --text-muted: #cbd5e1;
+    --text-light: #94a3b8;
+    --text-contrast: #ffffff;
+  }
+
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  .app-container {
+    @apply bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900;
+  }
+
+  .gallery-item {
+    @apply bg-gray-800 border border-gray-700;
+  }
+
+  .form-container {
+    @apply bg-gray-800 border border-gray-700;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .gallery-grid {
+    @apply grid-cols-2;
+  }
+
+  .gallery-item {
+    @apply shadow-none border border-gray-300;
+  }
+}
